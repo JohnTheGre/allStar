@@ -2,11 +2,24 @@
 	let diary = false;
 	let note = "";
 	let notes = [];
+	let username = ""; // Initialize username
 	import { onMount } from "svelte";
+
 	let stats = {
 		diariesWritten: 0,
 		favoriteTopic: "",
 	};
+	let hiddenNotes = []; // To store hidden notes
+
+	// Retrieve the username from localStorage on the client side
+	onMount(() => {
+		if (typeof localStorage !== "undefined") {
+			username = localStorage.getItem("username") || ""; // Fallback to an empty string if not found
+		} else {
+			console.warn("localStorage is not available.");
+		}
+		loadNotes(); // Call loadNotes after username is set
+	});
 
 	function shownDiary() {
 		diary = true;
@@ -16,49 +29,75 @@
 		diary = false;
 	}
 
+	// Save a new note for the current user
 	async function saveNote() {
-		if (note) {
-			try {
-				const response = await fetch("http://localhost:3019/api/notes", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json",
-					},
-					body: JSON.stringify({ note }),
-				});
-				if (response.ok) {
-					const data = await response.json();
-					notes = [...notes, note];
-					stats.diariesWritten++;
-					stats.favoriteTopic = "Life";
-					hiddenDiary();
-					note = "";
-				} else {
-					alert(`Error saving note`);
-				}
-			} catch (err) {
-				alert("Failed to save the note. Please try again.");
-			}
-		} else {
-			alert("There is no note to save.");
-		}
-	}
+    if (note) {
+        try {
+            const token = localStorage.getItem('accessToken');
+            const response = await fetch(`http://localhost:3019/api/note/${username}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, // Add token here
+                },
+                body: JSON.stringify({ user: username, note }),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                notes = [...notes, { note }];
+                stats.diariesWritten++;
+                stats.favoriteTopic = "Life";
+                hiddenDiary();
+                note = "";
+            } else {
+                const errorData = await response.json();
+                alert(`Error saving note: ${errorData.message}`);
+            }
+        } catch (err) {
+            alert("Failed to save the note. Please try again.");
+        }
+    } else {
+        alert("There is no note to save.");
+    }
+}
 
+	// Load notes for the current user
 	async function loadNotes() {
-		try {
-			const response = await fetch("http://localhost:3019/api/notes");
-			if (response.ok) {
-				const data = await response.json();
-				notes = data.notes;
-			} else {
-				alert("Error loading notes.");
-			}
-		} catch (err) {
-			alert("Failed to load notes.");
-		}
+    if (!username) {
+        console.warn("Username is not set. Cannot load notes.");
+        return;
+    }
+
+    try {
+        const token = localStorage.getItem('accessToken');
+        const response = await fetch(`http://localhost:3019/api/notes/${username}`, {
+            headers: {
+                "Authorization": `Bearer ${token}`, // Add token here
+            },
+        });
+        if (response.ok) {
+            const data = await response.json();
+            notes = data.notes;
+        } else {
+            const errorData = await response.json();
+            alert(`Error loading notes: ${errorData.message}`);
+        }
+    } catch (err) {
+        alert("Failed to load notes.");
+    }
+}
+
+	// Function to hide all notes
+	function hideAllNotes() {
+		hiddenNotes = [...notes]; // Save all notes in the hiddenNotes array
+		notes = [];
 	}
 
-	onMount(loadNotes);
+	// Function to unhide all notes
+	function unhideAllNotes() {
+		notes = [...hiddenNotes]; // Restore the notes from the hiddenNotes array
+		hiddenNotes = [];
+	}
 </script>
 
 <div class="container mx-auto p-4">
@@ -106,11 +145,24 @@
 
 	<!-- Display Notes -->
 	<div class="mt-8">
-		<h2 class="text-xl font-bold text-green-700 mb-4">Written Diaries</h2>
+		<h2 class="text-xl font-bold text-red-700 mb-4">Written Diaries</h2>
+		{#if notes.length > 0}
+		<button
+			class="hover:text-blue-900 text-blue-500 font-bold"
+			on:click={hideAllNotes}>
+			Hide All Entries
+		</button>
+		{:else}
+		<button
+			class="hover:text-blue-900 text-blue-500 font-bold"
+			on:click={unhideAllNotes}>
+			Unhide All Entries
+		</button>
+		{/if}
 		<ul>
 			{#each notes as note, index}
 			<li class="bg-gray-100 p-4 rounded-lg shadow mb-4">
-				<p>{note}</p>
+				<p>{note.note}</p> <!-- Updated to access the note text -->
 			</li>
 			{/each}
 		</ul>
