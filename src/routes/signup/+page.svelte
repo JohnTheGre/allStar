@@ -23,7 +23,7 @@
 		}
 
 		try {
-			const response = await fetch('http://localhost:3019/auth/signup', {
+			const response = await fetch('https://allstarbackend.onrender.com/auth/signup', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',

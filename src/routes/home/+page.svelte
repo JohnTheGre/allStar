@@ -34,7 +34,7 @@
     if (note) {
         try {
             const token = localStorage.getItem('accessToken');
-            const response = await fetch(`http://localhost:3019/api/note/${username}`, {
+            const response = await fetch(`https://allstarbackend.onrender.com/api/note/${username}`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -70,7 +70,7 @@
 
     try {
         const token = localStorage.getItem('accessToken');
-        const response = await fetch(`http://localhost:3019/api/notes/${username}`, {
+        const response = await fetch(`https://allstarbackend.onrender.com/api/notes/${username}`, {
             headers: {
                 "Authorization": `Bearer ${token}`, // Add token here
             },

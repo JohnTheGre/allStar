@@ -12,7 +12,7 @@
 		}
 
     try {
-        const response = await fetch('http://localhost:3019/auth/login', {
+        const response = await fetch('https://allstarbackend.onrender.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
