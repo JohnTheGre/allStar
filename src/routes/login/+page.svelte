@@ -9,6 +9,7 @@
 </script>
 <div class="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-blue-500 to-green-500 text-white px-4">
 	<h1 class="text-4xl sm:text-6xl font-bold mb-6">Login</h1>
+    <p class="text-lg sm:text-xl mb-8 text-center">Welcome back lil bro 😭</p>
     <form class="space-y-5 bg-white rounded-lg shadow-md p-8 w-full max-w-md text-gray-800">
         <div>
           <label for="email" class="block mb-2 text-sm font-medium">Email</label>
