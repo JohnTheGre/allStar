@@ -49,7 +49,7 @@
 	}
 </script>
 
-<div class="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-blue-500 to-green-500 text-white px-4">
+<div class="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-indigo-200 to-indigo-500 text-gray-800">
 	<h1 class="text-4xl sm:text-5xl font-bold mb-6">Create Your Account</h1>
 	<p class="text-lg sm:text-xl mb-8 text-center">Sign up to start your journey and access your personal diary!</p>
 

@@ -1,29 +1,51 @@
 <script>
 	function navigateToLogin() {
-		window.location.href = "/login"; 
+		window.location.href = "/login";
 	}
 	function navigateToSignUp() {
-		window.location.href = "/signup"; 
+		window.location.href = "/signup";
 	}
 </script>
 
-<div class="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-blue-500 to-green-500 text-white">
-	<h1 class="text-4xl sm:text-6xl font-bold mb-6 hover:font-mono hover:scale-105 transition-transform transform">Welcome to Your Diary App</h1>
-	<p class="text-lg sm:text-xl text-center mb-8 hover:font-serif hover:scale-105 transition-transform transform">
-		A safe haven where you can record your thoughts, and track your progress all in one place.
+<div class="w-full min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-indigo-200 to-indigo-500 text-gray-800">
+	<!-- Header Section -->
+	<h1 class="text-5xl sm:text-7xl font-extrabold mb-4 text-center tracking-wide drop-shadow-lg">
+		📔 Your Diary
+	</h1>
+	<p class="text-lg sm:text-2xl text-center mb-8 text-gray-700 italic max-w-xl">
+		"A private space to reflect, grow, and cherish your journey."
 	</p>
-	<div class = "flex space-x-4">
-	<button
-		class="bg-white text-blue-500 font-bold px-6 py-3 rounded shadow-lg hover:bg-blue-100 hover:scale-105 transition-transform transform"
-		on:click={navigateToLogin}
-	>
-		Login
-	</button>
-	<button
-	class="bg-white text-blue-500 font-bold px-6 py-3 rounded shadow-lg hover:bg-blue-100 hover:scale-105 transition-transform transform"
-	on:click={navigateToSignUp}
-    >
-	Sign up
-</button>
+
+	<!-- Call to Action Buttons -->
+	<div class="flex space-x-4">
+		<button
+			class="bg-indigo-600 text-white font-bold px-6 py-3 rounded-full shadow-md hover:bg-indigo-500 hover:scale-105 transition-transform transform"
+			on:click={navigateToLogin}>
+			Login
+		</button>
+		<button
+			class="bg-green-500 text-white font-bold px-6 py-3 rounded-full shadow-md hover:bg-green-400 hover:scale-105 transition-transform transform"
+			on:click={navigateToSignUp}>
+			Sign Up
+		</button>
+	</div>
+
+	<!-- Illustration -->
+	<div class="mt-12">
+		<img src="diary.png" alt="Diary Illustration" class="w-64 sm:w-96 drop-shadow-md animate-float">
+	</div>
 </div>
-</div>
+
+<style>
+	.animate-float {
+		animation: float 3s ease-in-out infinite;
+	}
+	@keyframes float {
+		0%, 100% {
+			transform: translateY(0);
+		}
+		50% {
+			transform: translateY(-10px);
+		}
+	}
+</style>
