@@ -91,7 +91,7 @@ async function deleteNote(index) {
 		try {
 			const noteToDelete = notes[index].note;
 			const token = localStorage.getItem("accessToken");
-			const response = await fetch(`http://localhost:3019/api/note/${username}`, {
+			const response = await fetch(`https://allstarbackend.onrender.com/api/note/${username}`, {
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
@@ -114,7 +114,7 @@ async function deleteNote(index) {
 		if (newContent) {
 			try {
 				const token = localStorage.getItem("accessToken");
-				const response = await fetch(`http://localhost:3019/api/note/${username}`, {
+				const response = await fetch(`https://allstarbackend.onrender.com/api/note/${username}`, {
 					method: "PUT",
 					headers: {
 						"Content-Type": "application/json",
